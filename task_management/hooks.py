@@ -4,6 +4,15 @@ app_publisher = "Sxnin"
 app_description = "an application for task management"
 app_email = "sxnin@gmail.com"
 app_license = "mit"
+app_include_js = "/assets/task_management/js/tasks.js"
+
+permission_query_conditions = {
+    "Tasks": "task_management.task_management.doctype.tasks.tasks.get_permission_query_conditions"
+}
+
+# has_permission = {
+#     "Tasks": "task_management.task_management.doctype.tasks.tasks.has_permission"
+# }
 
 # Apps
 # ------------------
