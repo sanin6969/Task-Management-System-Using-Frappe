@@ -1,3 +1,4 @@
+// automatically enters emp value
 frappe.ui.form.on('Leave Request', {
     onload: function(frm) {
         if (frm.is_new()) {

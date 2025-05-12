@@ -1,3 +1,4 @@
+// to show only the team lesad names nthe reports to feild
 frappe.ui.form.on('Employee Profile', {
     onload: function(frm) {
         frm.set_query('reports_to', function() {
@@ -10,13 +11,16 @@ frappe.ui.form.on('Employee Profile', {
         });
     }
 });
-frappe.ui.form.on('Employee Profile', {
-    refresh(frm) {
-        if (!frm.is_new()) {
-            frm.set_df_property('password', 'read_only', 1);
-        }
-    }
-});
+
+// frappe.ui.form.on('Employee Profile', {
+//     refresh(frm) {
+//         if (!frm.is_new()) {
+//             frm.set_df_property('password', 'read_only', 1);
+//         }
+//     }
+// });
+
+// only show the is manager o ony teh administsetor
 frappe.ui.form.on('Employee Profile', {
     refresh: function(frm) {
         if (frappe.session.user !== "Administrator") {
@@ -24,6 +28,7 @@ frappe.ui.form.on('Employee Profile', {
         }
     }
 });
+
 frappe.ui.form.on('Employee Profile', {
     refresh: function(frm) {
         toggle_fields(frm);
@@ -37,7 +42,6 @@ frappe.ui.form.on('Employee Profile', {
 });
 
 function toggle_fields(frm) {
-    // If "reports_to" is filled, disable is_team_lead
     if (frm.doc.reports_to) {
         frm.set_df_property('is_team_lead', 'read_only', 1);
         frm.set_df_property('is_team_lead', 'description', 'You cannot be a team lead if you report to someone.');
@@ -46,7 +50,6 @@ function toggle_fields(frm) {
         frm.set_df_property('is_team_lead', 'description', '');
     }
 
-    // If is_team_lead is checked, disable reports_to
     if (frm.doc.is_team_lead) {
         frm.set_df_property('reports_to', 'read_only', 1);
         frm.set_df_property('reports_to', 'description', 'Team Leads do not report to anyone.');

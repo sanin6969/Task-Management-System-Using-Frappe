@@ -54,6 +54,7 @@ class Tasks(Document):
                 time_diff = self.end_time - self.start_time
                 print(time_diff,'timeee ddddddddddiiiiiiiiifffffffff')
                 self.working_hours = round(time_diff.total_seconds() / 3600, 2)
+                print(self.working_hours,'wwwwwwwwwwwwwroooooookkkkkking hooouuuuurrrssssss')
                 self.send_completed_notification()
 
     def send_completed_notification(self):
@@ -112,6 +113,8 @@ def has_permission(doc, ptype):
     user = frappe.session.user  
     if "HR Manager" in frappe.get_roles(user):
         return True
+    if doc.owner == user:
+            return True
 
     employee_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")
     return doc.created_by == user or doc.assigned_to == employee_name

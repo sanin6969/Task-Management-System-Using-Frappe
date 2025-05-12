@@ -24,7 +24,7 @@ def execute(filters=None):
     data = frappe.get_all("Tasks",
         filters=conditions,
         fields=[
-            "title",
+            "task_title",
             "created_by",
             "assigned_to",
             "assigned_date",
@@ -37,13 +37,11 @@ def execute(filters=None):
     )
 
     columns = [
-        {"label": "Task Title", "fieldname": "title", "fieldtype": "Data", "width": 200},
+        {"label": "Task Title", "fieldname": "task_title", "fieldtype": "Data", "width": 200},
         {"label": "Assigned By", "fieldname": "created_by", "fieldtype": "Link", "options": "User", "width": 150},
         {"label": "Assigned To", "fieldname": "assigned_to", "fieldtype": "Link", "options": "Employee Profile", "width": 150},
-        {"label": "Assigned Date", "fieldname": "assigned_date", "fieldtype": "Date", "width": 120},
         {"label": "Start Time", "fieldname": "start_time", "fieldtype": "Time", "width": 100},
         {"label": "End Time", "fieldname": "end_time", "fieldtype": "Time", "width": 100},
-        {"label": "Working Hours", "fieldname": "working_hours", "fieldtype": "Float", "width": 100},
         {"label": "Status", "fieldname": "status", "fieldtype": "Select", "width": 120}
     ]
 

@@ -67,19 +67,19 @@ class EmployeeProfile(Document):
                     "email_content": f"{doc.first_name} has been assigned to you by {frappe.session.user}."
                 }).insert(ignore_permissions=True)
 
-def has_permission(self, ptype):
-        user = frappe.session.user
-        roles = frappe.get_roles(user)
+# def has_permission(self, ptype):
+#         user = frappe.session.user
+#         roles = frappe.get_roles(user)
 
-        if "HR Manager" in roles:
-            return True
+#         if "HR Manager" in roles:
+#             return True
 
-        if self.user == user:
-            return True
+#         if self.user == user:
+#             return True
 
-        if "Team Lead" in roles:
-            lead_profile_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")
-            if lead_profile_name and self.reports_to == lead_profile_name:
-                return True
+#         if "Team Lead" in roles:
+#             lead_profile_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")
+#             if lead_profile_name and self.reports_to == lead_profile_name:
+#                 return True
 
-        return False
+#         return False

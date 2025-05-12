@@ -14,7 +14,9 @@ def has_permission(doc, user):
     print(roles, 'rrrrooooooooooolleeeeeees') 
 
     if "HR Manager" in roles:
-        return doc.status == "Pending HR Approval"
+        print(doc.workflow_state,'wwwwwwwwwooooooooorrrk sssssstttttttaaattttte')
+        return doc.workflow_state == "Pending HR Approval"
+
 
     if "Team Lead" in roles:
         team_lead_profile = frappe.get_value("Employee Profile", {"user_id": user}, "name")
