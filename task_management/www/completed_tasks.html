@@ -1,0 +1,80 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<style>
+    .gradient-header {
+        color: white;
+        padding: 10px 10px;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .task-card {
+        transition: transform 0.2s ease-in-out;
+         padding: 30px 30px;
+
+    }
+
+    .task-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .badge-status {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+        border-radius: 20px;
+    }
+
+    .completed-date {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+</style>
+<!-- <script>
+    const tasks = {{ tasks | tojson }};
+    console.log("Tasks:", tasks);
+</script> -->
+<div class="container my-5">
+    <div class="gradient-header">
+        <h2 class="fw-bold">✅ Completed Tasks by Employees</h2>
+        <p class="mb-0">Here's a summary of tasks that have been successfully completed.</p>
+    </div>
+
+    <div class="row">
+        {% if tasks %}
+            {% for task in tasks %}
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="card task-card border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">
+                            <i class="bi bi-check-circle-fill me-2 text-success"></i>{{ task.task_title }}
+                        </h5>
+                        <p class="card-text mb-1">
+                            <i class="bi bi-person-fill me-2 text-dark"></i><strong>Employee:</strong> {{ task.assigned_to }}
+                        </p>
+                        
+                        <p class="card-text mb-1">
+                            <i class="bi bi-info-circle-fill me-2 text-dark"></i><strong>Status:</strong>
+                            <span class="badge bg-success badge-status">{{ task.status }}</span>
+                        </p>
+                        <p class="card-text completed-date">
+                            <i class="bi bi-calendar-check me-2 text-dark"></i><strong>Assigned By:</strong> {{ task.created_by }}
+                            <i class="bi bi-calendar-check me-2 text-dark"></i><strong>Completed on:</strong> {{ task.completion_date }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info text-center shadow-sm">
+                    <i class="bi bi-emoji-frown me-2"></i> No completed tasks found.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

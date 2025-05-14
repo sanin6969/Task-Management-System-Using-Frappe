@@ -6,24 +6,25 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "created_by",
   "task_title",
   "created_date",
   "assigned_to",
   "assigned_date",
-  "status",
   "start_time",
   "end_time",
+  "description",
   "workings_hours",
   "column_break_5oh7",
-  "created_by",
-  "description",
+  "status",
   "attachments"
  ],
  "fields": [
   {
    "fieldname": "created_date",
    "fieldtype": "Date",
-   "label": "Created Date"
+   "label": "Created Date",
+   "read_only": 1
   },
   {
    "fieldname": "assigned_to",
@@ -39,11 +40,12 @@
    "read_only": 1
   },
   {
+   "default": "Draft",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "options": "Draft\nAssigned\nIn Progress\nCompleted"
+   "options": "\nDraft\nAssigned\nIn Progress\nCompleted"
   },
   {
    "fieldname": "start_time",
@@ -88,14 +90,15 @@
    "fieldname": "task_title",
    "fieldtype": "Data",
    "label": "Task Title",
+   "reqd": 1,
    "unique": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-09 16:38:54.817385",
- "modified_by": "muhdsaninacca@gmail.com",
+ "modified": "2025-05-13 12:24:27.573450",
+ "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Tasks",
  "naming_rule": "By fieldname",

@@ -4,12 +4,19 @@ app_publisher = "Sxnin"
 app_description = "an application for task management"
 app_email = "sxnin@gmail.com"
 app_license = "mit"
-app_include_js = "/assets/task_management/js/tasks.js"
+# app_include_js = "/assets/task_management/js/tasks.js"
 
 permission_query_conditions = {
-    "Tasks": "task_management.task_management.doctype.tasks.tasks.get_permission_query_conditions"
+    "Tasks": "task_management.task_management.doctype.tasks.tasks.get_permission_query_conditions",
+    "Employee Profile": "task_management.employee_profile_permissions.get_permission_query_conditions" ,  
+    "Leave Request": "task_management.leave_request_permissions.get_permission_query_conditions" ,  
 }
 
+doc_events = {
+    "Employee Profile": {
+        "before_get": "task_management.employee_profile_permissions"
+    }
+}
 # has_permission = {
 #     "Tasks": "task_management.task_management.doctype.tasks.tasks.has_permission"
 # }

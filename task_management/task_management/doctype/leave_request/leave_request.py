@@ -6,36 +6,22 @@ from frappe.model.document import Document
 
 
 class LeaveRequest(Document):
-	pass
+    def before_validate(self):
+        self.employee = frappe.session.user
 
-def has_permission(doc, user):
-    print('workingggggggggg')
-    roles = frappe.get_roles(user)
-    print(roles, 'rrrrooooooooooolleeeeeees') 
+    def validate(self):
+        used = frappe.db.count('Leave Request', {
+            'owner': self.owner,
+            'leave_type': self.leave_type,
+            'docstatus': 1
+        })
 
-    if "HR Manager" in roles:
-        print(doc.workflow_state,'wwwwwwwwwooooooooorrrk sssssstttttttaaattttte')
-        return doc.workflow_state == "Pending HR Approval"
+        leave_days = float(self.leave_days)
+        limit = 10 if self.leave_type == "Sick Leave" else 10
 
-
-    if "Team Lead" in roles:
-        team_lead_profile = frappe.get_value("Employee Profile", {"user_id": user}, "name")
-        if not team_lead_profile:
-            return False
-
-        employee_reports_to = frappe.get_value("Employee Profile", doc.employee, "reports_to")
-        return employee_reports_to == team_lead_profile
-
-    if "Employee" in roles:
-        return doc.owner == user
-
-    return False
+        if used + leave_days > limit:
+            frappe.throw(
+                f"You have exceeded your {self.leave_type} limit. Only {limit - used} days left."
+            )
 
 
-
-
-
-
-    
-
-    

@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"F8NW4Kl0xR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Team Leads\",\"col\":4}},{\"id\":\"m9GWVEWN7L\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Reports\",\"col\":4}},{\"id\":\"wI-Ewa4FNI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks Assigned\",\"col\":4}},{\"id\":\"sa966VKmIg\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"iaIVnWZMUd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Request\",\"col\":6}},{\"id\":\"cMx2yq3xfk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employees\",\"col\":6}}]",
+ "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"m9GWVEWN7L\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Reports\",\"col\":4}},{\"id\":\"wI-Ewa4FNI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks Assigned\",\"col\":4}},{\"id\":\"sa966VKmIg\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"iaIVnWZMUd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Request\",\"col\":3}},{\"id\":\"QkEkzGQc09\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"WebSite\",\"col\":3}},{\"id\":\"cMx2yq3xfk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employees\",\"col\":3}}]",
  "creation": "2025-05-09 10:05:40.879530",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,8 +13,8 @@
  "is_hidden": 0,
  "label": "Task Management System",
  "links": [],
- "modified": "2025-05-12 10:27:07.182889",
- "modified_by": "muhdsaninacca@gmail.com",
+ "modified": "2025-05-13 17:39:26.047740",
+ "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Task Management System",
  "number_cards": [],
@@ -46,6 +46,13 @@
    "type": "DocType"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "WebSite",
+   "type": "URL",
+   "url": "http://localhost:8001/completed_tasks"
+  },
+  {
    "color": "Orange",
    "doc_view": "List",
    "label": "Tasks Assigned",
@@ -59,14 +66,6 @@
    "label": "Leave Request",
    "link_to": "Leave Request",
    "stats_filter": "[]",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Team Leads",
-   "link_to": "Employee Profile",
-   "stats_filter": "[[\"Employee Profile\",\"is_team_lead\",\"=\",1,false]]",
    "type": "DocType"
   }
  ],

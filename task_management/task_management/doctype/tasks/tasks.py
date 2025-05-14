@@ -9,53 +9,48 @@ class Tasks(Document):
     
     def before_insert(self):
         self.created_by = frappe.session.user
-        
-    def on_update(self):
+    def validate(self):
         current_user = frappe.session.user
-
         is_employee = frappe.db.exists("Employee Profile", {"user": current_user})
         is_team_lead = "Team Lead" in frappe.get_roles()
 
         if is_team_lead:
-            allowed_statuses = ["Draft", "Assigned"]
-            if self.status not in allowed_statuses:
-                frappe.throw(_(f"Team Lead can only update the task status to {allowed_statuses}. You cannot set it to '{self.status}'."))
-
-
-            if self.assigned_to and not self.assigned_date:
-                self.assigned_date = frappe.utils.nowdate()
-                
-            if self.status == "Assigned":
-                if not self.assigned_to :
-                    frappe.throw(_("When status is 'Assigned', 'Assigned To' field  is required."))
-
-                self.send_assignment_notification()
-
-            if self.status == "Draft":
-                if self.assigned_to :
-                    frappe.throw(_("When status is 'Draft', 'Assigned To'  must be empty."))
+            if self.status not in ["Draft", "Assigned"]:
+                frappe.throw(_("Team Lead can only update status to Draft or Assigned"))
+            if self.status == "Assigned" and not self.assigned_to:
+                frappe.throw(_("Assigned To is required when status is 'Assigned'"))
+            if self.status == "Draft" and self.assigned_to:
+                frappe.throw(_("Assigned To must be empty when status is 'Draft'"))
 
         elif is_employee:
-            allowed_statuses = ["In Progress", "Completed"]
-            if self.status not in allowed_statuses:
-                frappe.throw(_(f"Employee can only update the task status to {allowed_statuses}. You cannot set it to '{self.status}'."))
+            if self.status not in ["In Progress", "Completed"]:
+                frappe.throw(_("Employees can only set status to In Progress or Completed"))
 
+    def on_update(self):
+        current_user = frappe.session.user
+        is_employee = frappe.db.exists("Employee Profile", {"user": current_user})
+        is_team_lead = "Team Lead" in frappe.get_roles()
+
+        if is_team_lead:
+            self.created_date =frappe.utils.nowdate()
+            print(self.created_date,'created dateeeeeeeeeeeeeee')
+            if self.status == "Assigned":
+                self.assigned_date = frappe.utils.nowdate()
+            print(self.assigned_date,'Assigned dateeeeeeeeeeeeeee')
+            if self.status == "Assigned":
+                self.send_assignment_notification()
+
+        elif is_employee:
             if self.status == "In Progress":
                 self.start_time = datetime.now()
-                print(self.start_time,'ssssssstaaaaaaartttt timeee')
-            if self.status == "Completed":
+            elif self.status == "Completed":
                 self.end_time = datetime.now()
-
-                self.start_time = get_datetime(self.start_time)
-                self.end_time = get_datetime(self.end_time)
-                print(self.start_time,'ssssssstaaaaaaartttt timeee')
-                print(self.end_time,'ssssssstaaaaaaartttt timeee')
-
-                time_diff = self.end_time - self.start_time
-                print(time_diff,'timeee ddddddddddiiiiiiiiifffffffff')
-                self.working_hours = round(time_diff.total_seconds() / 3600, 2)
-                print(self.working_hours,'wwwwwwwwwwwwwroooooookkkkkking hooouuuuurrrssssss')
+                self.workings_hours = round(
+                    (get_datetime(self.end_time) - get_datetime(self.start_time)).total_seconds() / 3600, 2
+                )
+                print(self.workings_hours,'tttttttttoaaaaaaaaaaaaaaaataaaaaaal ttttttttiiiiiiimmmmmmmmeeeeeeee')
                 self.send_completed_notification()
+    
 
     def send_completed_notification(self):
         print(self.assigned_to,'assigned tpooooooo')
@@ -73,7 +68,7 @@ class Tasks(Document):
         if not self.assigned_to:
             return  
 
-        task_name = self.name or "a task"
+        task_name = self.name 
         creator = frappe.get_value("User", self.created_by, "full_name") or self.created_by
         assignee = frappe.get_value("Employee Profile", {"name": self.assigned_to}, "user")
 
@@ -106,20 +101,45 @@ def get_permission_query_conditions(user):
         return ""
 
     employee_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")
+    print(employee_name,'emp naaaaaaaaaaaammmmmmmmeeeeeeee')
     return f"""(tabTasks.created_by = '{user}' OR tabTasks.assigned_to = '{employee_name}')"""
 
 
-def has_permission(doc, ptype):
-    user = frappe.session.user  
-    if "HR Manager" in frappe.get_roles(user):
-        return True
-    if doc.owner == user:
-            return True
-
-    employee_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")
-    return doc.created_by == user or doc.assigned_to == employee_name
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def has_permission(doc, ptype):
+#     user = frappe.session.user  
+#     print(user,'uuuuuuuuussssssssserrrrrrrr')
+#     if "HR Manager" in frappe.get_roles(user):
+#         return True
+#     if doc.owner == user:
+#             return True
+
+#     employee_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")
+#     return doc.created_by == user or doc.assigned_to == employee_name

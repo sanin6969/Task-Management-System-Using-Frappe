@@ -1,32 +1,32 @@
 frappe.query_reports["Task Report"] = {
-    filters: [
+    "filters": [
         {
-            fieldname: "created_by",
-            label: "Created By",
-            fieldtype: "Link",
-            options: "User"
+            "fieldname": "created_by",
+            "label": __("Created By"),
+            "fieldtype": "Link",
+            "options": "User"
         },
         {
-            fieldname: "assigned_to",
-            label: "Assigned To",
-            fieldtype: "Link",
-            options: "Employee"
+            "fieldname": "assigned_to",
+            "label": __("Assigned To"),
+            "fieldtype": "Link",
+            "options": "Employee"
         },
         {
-            fieldname: "status",
-            label: "Status",
-            fieldtype: "Select",
-            options: ["", "Draft", "Assigned", "In Progress", "Completed"]
+            "fieldname": "status",
+            "label": __("Status"),
+            "fieldtype": "Select",
+            "options": "\nDraft\nAssigned\nIn Progress\nCompleted"
         },
         {
-            fieldname: "from_date",
-            label: "From Date",
-            fieldtype: "Date"
+            "fieldname": "from_date",
+            "label": __("From Date"),
+            "fieldtype": "Date"
         },
         {
-            fieldname: "to_date",
-            label: "To Date",
-            fieldtype: "Date"
+            "fieldname": "to_date",
+            "label": __("To Date"),
+            "fieldtype": "Date"
         }
     ]
 };

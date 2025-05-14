@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:LVERQ-{employee}-{###}",
+ "autoname": "format:LVERQ-{###}",
  "creation": "2025-05-07 10:00:36.257538",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -12,6 +12,7 @@
   "to_date",
   "leave_type",
   "status",
+  "leave_days",
   "amended_from",
   "column_break_fvtf",
   "reason"
@@ -26,8 +27,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "employee",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "from_date",
@@ -77,14 +77,20 @@
   {
    "fieldname": "column_break_fvtf",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "leave_days",
+   "fieldtype": "Data",
+   "label": "Leave Days",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-12 09:47:03.257850",
- "modified_by": "muhdsaninacca@gmail.com",
+ "modified": "2025-05-13 14:56:57.388812",
+ "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Leave Request",
  "naming_rule": "Expression",
