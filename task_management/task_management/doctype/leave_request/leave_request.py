@@ -6,22 +6,32 @@ from frappe.model.document import Document
 
 
 class LeaveRequest(Document):
+    
     def before_validate(self):
-        self.employee = frappe.session.user
-
+        if not self.employee:
+            self.employee = frappe.session.user
+        
     def validate(self):
-        used = frappe.db.count('Leave Request', {
-            'owner': self.owner,
-            'leave_type': self.leave_type,
-            'docstatus': 1
-        })
-
         leave_days = float(self.leave_days)
-        limit = 10 if self.leave_type == "Sick Leave" else 10
+        employee = frappe.get_doc("Employee Profile", {"user": self.owner})
 
-        if used + leave_days > limit:
-            frappe.throw(
-                f"You have exceeded your {self.leave_type} limit. Only {limit - used} days left."
-            )
+        if self.leave_type == "Sick Leave":
+            if employee.sick_leave_remaining < leave_days:
+                frappe.throw(f"Not enough sick leave. You only have {round(employee.sick_leave_remaining)} days left.")
+        elif self.leave_type == "Casual Leave":
+            if employee.casual_leave_remaining < leave_days:
+                frappe.throw(f"Not enough casual leave. You only have {round(employee.casual_leave_remaining)} days left.")
 
+    def on_submit(self):
+        if self.docstatus == 1:
+            # print("submitting the leaaaave reqeusrstttttt")
+            employee = frappe.get_doc("Employee Profile", {"user": self.owner})
+            leave_days = float(self.leave_days)
+
+            if self.leave_type == "Sick Leave":
+                employee.sick_leave_remaining -= leave_days
+            elif self.leave_type == "Casual Leave":
+                employee.casual_leave_remaining -= leave_days
+
+            employee.save()
 

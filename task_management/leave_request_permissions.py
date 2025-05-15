@@ -1,30 +1,68 @@
 import frappe
 
 def get_permission_query_conditions(user, doctype):
-    conditions = []
+    if "HR Manager" in frappe.get_roles(user):
+        return "`tabLeave Request`.`workflow_state` != 'Draft'" 
+    employee_profile = frappe.db.get_value("Employee Profile", {"user": user}, "email")
+    # print(employee_profile,'empmpppprrrrrrrrooooooffffffiiilllleeeeeee')
+    if not employee_profile:
+        return None  
+    
+    if "Team Lead" in frappe.get_roles(user):
+        team_members = frappe.get_all(
+            "Employee Profile", 
+            filters={"reports_to": user},  
+            pluck="email"
+        )
+        allowed_employees = team_members + [employee_profile]
+        # print(allowed_employees,'allowed_employees')
+        
 
-    employee = frappe.db.get_value("Employee Profile", {"user": user}, "email")
-    employee_name =frappe.db.get_value("Employee Profile", {"user": user}, "name")
-    print(employee,'employeeeeeee')
-    print(employee_name,'employeeeeeee nnaaaaaaaammmmmmme')
-
-    user_roles = frappe.get_roles(user)
-
-    if "HR Manager" in user_roles:
-        return ""  
-
-    elif "Team Lead" in user_roles:
-        # Fix: Compare reports_to to the employee name, not the user ID
-        reports = frappe.get_all("Employee Profile", filters={"reports_to": employee}, pluck="name")
-        print(reports,'rrrrrrrreeeeepppportsssss')
-        # Include own leave requests
-        allowed_employees = reports + [employee_name]
-        print(allowed_employees,'aalllllllwwwwed')
-
+        
         allowed_str = ", ".join(f"'{emp}'" for emp in allowed_employees)
-        print(allowed_str,'aaaaaaaaaaalllllllllllllllo')
-        return f"`tabLeave Request`.`employee` IN ({allowed_str})"
-
-    else:
-        # Regular employees can only see their own leave requests
-        return f"`tabLeave Request`.`employee` = '{employee}'"
+        # print(allowed_str,'aaaaaallowwweeddddddd str')
+        return (f"`tabLeave Request`.`employee` IN ({allowed_str})")
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    # return f"`tabLeave Request`.`employee` = '{employee_profile}'" 
+ 
+ 
+#  AND "
+#                 f"`tabLeave Request`.`status` IN ('Pending Team Lead Approval', 'Approved')

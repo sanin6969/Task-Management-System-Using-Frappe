@@ -35,12 +35,13 @@ def execute(filters=None):
             "status"
         ],
         order_by="assigned_date desc"
-    )
+    )   
+    print(data,'dddddddddaaaaaaaaatttttttttaaaaaaaaaaaa')
 
     columns = [
         {"label": _("Task Title"), "fieldname": "task_title", "fieldtype": "Data", "width": 200},
         {"label": _("Assigned By"), "fieldname": "created_by", "fieldtype": "Link", "options": "User", "width": 150},
-        {"label": _("Assigned To"), "fieldname": "assigned_to", "fieldtype": "Link", "options": "Employee", "width": 150},
+        {"label": _("Assigned To"), "fieldname": "assigned_to", "fieldtype": "Link", "options": "Employee Profile", "width": 150},
         {"label": _("Assigned Date"), "fieldname": "assigned_date", "fieldtype": "Date", "width": 120},
         {"label": _("Start Time"), "fieldname": "start_time", "fieldtype": "Time", "width": 100},
         {"label": _("End Time"), "fieldname": "end_time", "fieldtype": "Time", "width": 100},

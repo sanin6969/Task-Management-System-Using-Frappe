@@ -10,7 +10,7 @@ frappe.query_reports["Task Report"] = {
             "fieldname": "assigned_to",
             "label": __("Assigned To"),
             "fieldtype": "Link",
-            "options": "Employee"
+            "options": "Employee Profile"
         },
         {
             "fieldname": "status",

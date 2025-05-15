@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"m9GWVEWN7L\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Reports\",\"col\":4}},{\"id\":\"wI-Ewa4FNI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks Assigned\",\"col\":4}},{\"id\":\"sa966VKmIg\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"iaIVnWZMUd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Request\",\"col\":3}},{\"id\":\"QkEkzGQc09\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"WebSite\",\"col\":3}},{\"id\":\"cMx2yq3xfk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employees\",\"col\":3}}]",
+ "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"wI-Ewa4FNI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks Assigned\",\"col\":4}},{\"id\":\"GF8_qRwYng\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Reports\",\"col\":3}},{\"id\":\"sa966VKmIg\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"iaIVnWZMUd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Request\",\"col\":3}},{\"id\":\"QkEkzGQc09\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"WebSite\",\"col\":3}},{\"id\":\"cMx2yq3xfk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employees\",\"col\":3}}]",
  "creation": "2025-05-09 10:05:40.879530",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Task Management System",
  "links": [],
- "modified": "2025-05-13 17:39:26.047740",
+ "modified": "2025-05-14 09:26:57.524203",
  "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Task Management System",
@@ -29,14 +29,6 @@
  ],
  "sequence_id": 1.0,
  "shortcuts": [
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Task Reports",
-   "link_to": "Task Reports",
-   "report_ref_doctype": "Tasks",
-   "type": "Report"
-  },
   {
    "color": "Grey",
    "doc_view": "List",
@@ -59,6 +51,14 @@
    "link_to": "Tasks",
    "stats_filter": "[]",
    "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Task Reports",
+   "link_to": "Task Reports",
+   "report_ref_doctype": "Tasks",
+   "type": "Report"
   },
   {
    "color": "Grey",

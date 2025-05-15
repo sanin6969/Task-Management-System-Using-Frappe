@@ -5,8 +5,7 @@ def get_permission_query_conditions(user, doctype):
 
 
     employee = frappe.db.get_value("Employee Profile", {"user": user}, "name")
-    # if not employee:
-    #     return None
+
 
     user_roles = frappe.get_roles(user)
     

@@ -14,7 +14,9 @@
   "password",
   "column_break_bxne",
   "reports_to",
-  "roles"
+  "roles",
+  "sick_leave_remaining",
+  "casual_leave_remaining"
  ],
  "fields": [
   {
@@ -71,13 +73,27 @@
    "fieldtype": "Table MultiSelect",
    "label": "Roles",
    "options": "Employee Role"
+  },
+  {
+   "default": "10",
+   "fieldname": "sick_leave_remaining",
+   "fieldtype": "Float",
+   "label": "Sick Leave Remaining",
+   "read_only": 1
+  },
+  {
+   "default": "10",
+   "fieldname": "casual_leave_remaining",
+   "fieldtype": "Float",
+   "label": "Casual Leave Remaining",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-13 15:10:20.101282",
- "modified_by": "hrmanager1@gmail.com",
+ "modified": "2025-05-14 14:13:09.750153",
+ "modified_by": "Administrator",
  "module": "Task Management",
  "name": "Employee Profile",
  "naming_rule": "Expression",

@@ -7,29 +7,16 @@ frappe.ui.form.on('Tasks', {
             });
         },
         
-    refresh: function(frm) {
-        frappe.call({
-            method: 'frappe.client.get_value',
-            args: {
-                doctype: 'Employee Profile',
-                filters: { user: frappe.session.user },
-                fieldname: 'name'
-            },
-            callback: function(response) {
-                const is_employee = !!response.message;
-                const is_team_lead = frappe.user.has_role("Team Lead");
-    
-                if (is_employee && !is_team_lead) {
-                    frm.set_df_property('created_date', 'read_only', 1);
-                    frm.set_df_property('assigned_to', 'read_only', 1);
-                    frm.set_df_property('status', 'read_only', 1);
-                }
-            }
-        });
-        if (frappe.user.has_role("Employee") &&
-            !frappe.user.has_role("Team Lead") &&
-            !frappe.user.has_role("HR Manager")) {
+    refresh: async function(frm) {
+        const is_team_lead = await frappe.user.has_role("Team Lead");
+        const is_employee = await frappe.user.has_role("Employee");
+        const is_hr_manager = await frappe.user.has_role("HR Manager");
 
+        if (!is_team_lead && is_employee) {
+            frm.set_df_property('status', 'read_only', 1);
+        }
+
+        if (is_employee && !is_team_lead && !is_hr_manager) {
             frm.page.add_inner_button('Mark In Progress', function () {
                 frm.set_value("status", "In Progress");
             }, 'Change Status');
@@ -40,6 +27,7 @@ frappe.ui.form.on('Tasks', {
 
             frm.add_custom_button("Add Comment", () => {
                 const d = new frappe.ui.Dialog({
+                    title: "Add Comment",
                     fields: [
                         {
                             label: 'Comment',
@@ -67,8 +55,8 @@ frappe.ui.form.on('Tasks', {
                 d.show();
             });
         }
-
     }
+
 });
 
 

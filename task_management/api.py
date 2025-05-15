@@ -5,8 +5,6 @@ from frappe import _
 def get_team_members(doctype, txt, searchfield, start, page_len, filters):
     user = frappe.session.user
 
-    if "Team Lead" not in frappe.get_roles(user):
-        frappe.throw(_("You are not authorized to assign tasks"))
 
     lead_profile = frappe.get_doc("Employee Profile", {"user": user})
     
@@ -23,22 +21,15 @@ def get_team_members(doctype, txt, searchfield, start, page_len, filters):
     return [[emp.name] for emp in employees if emp.user]
 
 
-
-
-
-SICK_LEAVE_LIMIT = 10
-CASUAL_LEAVE_LIMIT = 10
-
 @frappe.whitelist()
 def get_remaining_leaves(user, leave_type):
-    used = frappe.db.count('Leave Request', {
-        'owner': user,
-        'leave_type': leave_type,
-        'docstatus': 1  
-    })
+    employee = frappe.get_doc("Employee Profile", {"user_id": user})
+    if leave_type == "Sick Leave":
+        return {"remaining": employee.sick_leave_remaining}
+    elif leave_type == "Casual Leave":
+        return {"remaining": employee.casual_leave_remaining}
+    return {"remaining": 0}
 
-    limit = SICK_LEAVE_LIMIT if leave_type == "Sick Leave" else CASUAL_LEAVE_LIMIT
-    return {"remaining": max(0, limit - used)}
 
 
 @frappe.whitelist()

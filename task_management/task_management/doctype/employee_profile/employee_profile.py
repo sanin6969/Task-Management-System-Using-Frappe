@@ -55,7 +55,6 @@ class EmployeeProfile(Document):
             for role in roles_to_assign:
                 if not frappe.db.exists("Has Role", {"parent": user.name, "role": role}):
                     user.append("roles", {"role": role})
-
             user.save(ignore_permissions=True)
 
             doc.user = user.name

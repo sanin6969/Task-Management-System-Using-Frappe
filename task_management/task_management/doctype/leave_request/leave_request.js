@@ -1,17 +1,4 @@
-// automatically enters emp value
 frappe.ui.form.on('Leave Request', {
-    // onload: function(frm) {
-    //     if (frm.is_new()) {
-    //         frappe.call({
-    //             method: "task_management.api.get_employee_profile",
-    //             callback: function(r) {
-    //                 if (r.message) {
-    //                     frm.set_value("employee", r.message);
-    //                 }
-    //             }
-    //         });
-    //     }
-    // },
     from_date: function(frm) {
         calculate_leave_days(frm);
     },
@@ -22,7 +9,6 @@ frappe.ui.form.on('Leave Request', {
         get_remaining_leaves(frm);
     }
 });
-
 
 function calculate_leave_days(frm) {
     if (frm.doc.from_date && frm.doc.to_date) {
