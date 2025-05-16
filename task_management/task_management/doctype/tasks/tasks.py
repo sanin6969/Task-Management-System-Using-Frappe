@@ -21,8 +21,6 @@ class Tasks(Document):
         current_user, is_employee, is_team_lead = self._get_user_roles()
         
         if is_team_lead:
-            if self.status not in ["Draft", "Assigned"]:
-                frappe.throw(_("Team Lead can only update status to Draft or Assigned"))
             if self.status == "Assigned" and not self.assigned_to:
                 frappe.throw(_("Assigned To is required when status is 'Assigned'"))
             if self.status == "Draft" and self.assigned_to:
@@ -50,11 +48,32 @@ class Tasks(Document):
             self.send_assignment_notification()
         elif is_employee and self.status == "Completed":
             self.send_completed_notification()
-    
+            
+        project_tasks = frappe.get_all(
+                "Task",  
+                filters={"task_name": self.name}, 
+                fields=["name", "parent", "parenttype"]
+            )
+        if self.status == "In Progress":
+            for pt in project_tasks:
+                frappe.db.set_value("Task", pt.name, "status", "Started")
+        if self.status == "Completed":
+            for pt in project_tasks:
+                frappe.db.set_value("Task", pt.name, "status", "Completed")
+            
+                
+        # project_name = self.project_name  
+        # print(project_name,'nnnnnnnnnnnnnnnnnnnnn')
+        # if project_name:
+        #     project_doc = frappe.get_doc("Project", project_name)
+        #     if project_doc.status != "In Progress":
+        #         project_doc.status = "In Progress"
+        #         project_doc.save()
 
+    # def after_insert(self):
+        # print('wwwwwwwwwwwwwwwwwwwwwww')
+        
     def send_completed_notification(self):
-        # print(self.assigned_to,'assigned tpooooooo')
-        # print(self.created_by,'createdddddd byyyyyyy')
         frappe.get_doc({
             "doctype": "Notification Log",
             "for_user": self.created_by,

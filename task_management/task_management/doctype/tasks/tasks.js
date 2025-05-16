@@ -12,10 +12,15 @@ frappe.ui.form.on('Tasks', {
         const is_employee = await frappe.user.has_role("Employee");
         const is_hr_manager = await frappe.user.has_role("HR Manager");
 
-        if (!is_team_lead && is_employee) {
-            frm.set_df_property('status', 'read_only', 1);
-        }
+        if (is_team_lead) {
+            frm.page.add_inner_button('Mark Assigned', function () {
+                frm.set_value("status", "Assigned ");
+            }, 'Change Status');
 
+            // frm.page.add_inner_button('Mark Completed', function () {
+            //     frm.set_value("status", "Completed");
+            // }, 'Change Status');
+        }
         if (is_employee && !is_team_lead && !is_hr_manager) {
             frm.page.add_inner_button('Mark In Progress', function () {
                 frm.set_value("status", "In Progress");

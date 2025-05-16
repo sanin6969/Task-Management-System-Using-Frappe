@@ -1,9 +1,28 @@
 import frappe
 from frappe.model.document import Document
 from frappe.desk.form.assign_to import add
-
+from frappe.model.rename_doc import rename_doc
 class EmployeeProfile(Document):
+    def on_update(self):
+        if self.user:
+            try:
+                user = frappe.get_doc("User", self.user)
+            except Exception as e:
+                print("Error updating user email:", e)
+                
 
+            if self.email and self.email != user.email:
+                if frappe.db.exists("User", self.email):
+                    frappe.throw(f"Email {self.email} is already assigned to another user")
+                
+                frappe.db.savepoint("employee_update")
+                try:
+                    rename_doc("User", user.name, self.email, ignore_permissions=True)
+                    frappe.db.set_value("Employee Profile", self.name, "user", self.email)
+                except Exception as e:
+                    frappe.db.rollback_savepoint("employee_update")
+                    frappe.throw(str(e))
+                
     def after_insert(doc):
         if doc.reports_to:
             if doc.roles:
@@ -44,7 +63,7 @@ class EmployeeProfile(Document):
                 user.username = doc.email.split('@')[0]
                 user.enabled = 1
                 user.new_password = "plmnkoijb"
-                user.send_welcome_email = 1
+                user.send_welcome_email = 0
                 user.insert(ignore_permissions=True)
 
             roles_to_assign = {"Employee"}
@@ -56,7 +75,18 @@ class EmployeeProfile(Document):
                 if not frappe.db.exists("Has Role", {"parent": user.name, "role": role}):
                     user.append("roles", {"role": role})
             user.save(ignore_permissions=True)
-
+            frappe.sendmail(
+                recipients=[doc.email],
+                subject= f"Welcome to Task Management , {doc.first_name}",
+                template="UserWelcomeEmail",
+                args={
+                    "doc": doc,  
+                    "password": 'plmnkoijb' 
+                },
+                reference_doctype="Employee Profile",
+                reference_name=doc.name,
+                enqueue=True
+            )
             doc.user = user.name
             frappe.db.set_value("Employee Profile", doc.name, "user", user.name)
             frappe.db.set_value("Employee Profile", doc.name, "password", "")

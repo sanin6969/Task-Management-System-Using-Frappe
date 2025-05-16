@@ -1,4 +1,4 @@
-frappe.query_reports["Task Report"] = {
+frappe.query_reports["Task Reports"] = {
     "filters": [
         {
             "fieldname": "created_by",

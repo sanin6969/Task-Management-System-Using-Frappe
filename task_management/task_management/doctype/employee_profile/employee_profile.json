@@ -12,10 +12,11 @@
   "email",
   "last_name",
   "password",
+  "sick_leave_remaining",
   "column_break_bxne",
   "reports_to",
   "roles",
-  "sick_leave_remaining",
+  "role_modules",
   "casual_leave_remaining"
  ],
  "fields": [
@@ -87,13 +88,19 @@
    "fieldtype": "Float",
    "label": "Casual Leave Remaining",
    "read_only": 1
+  },
+  {
+   "fieldname": "role_modules",
+   "fieldtype": "Link",
+   "label": "Role Modules",
+   "options": "Module Profile"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-14 14:13:09.750153",
- "modified_by": "Administrator",
+ "modified": "2025-05-15 11:26:14.478989",
+ "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Employee Profile",
  "naming_rule": "Expression",

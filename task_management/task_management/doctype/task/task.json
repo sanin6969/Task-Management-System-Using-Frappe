@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-05-16 12:23:50.364949",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_fzaz",
+  "task_name",
+  "assigned_to",
+  "column_break_hyc0",
+  "due_date",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_fzaz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "task_name",
+   "fieldtype": "Link",
+   "label": "Task Name",
+   "options": "Tasks",
+   "unique": 1
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "Employee Profile",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_hyc0",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Not Started\nStarted\nCompleted\nOverdue",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-05-16 15:25:15.344215",
+ "modified_by": "hrmanager1@gmail.com",
+ "module": "Task Management",
+ "name": "Task",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
