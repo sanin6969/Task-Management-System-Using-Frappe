@@ -50,7 +50,7 @@
    "fieldname": "task",
    "fieldtype": "Table",
    "label": "Task",
-   "options": "Task"
+   "options": "Project Task"
   },
   {
    "fieldname": "team_lead",
@@ -71,7 +71,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-16 12:29:02.614279",
+ "modified": "2025-05-16 16:28:11.825694",
  "modified_by": "Administrator",
  "module": "Task Management",
  "name": "Project",

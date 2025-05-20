@@ -84,29 +84,28 @@
   },
   {
    "fieldname": "task_title",
-   "fieldtype": "Link",
-   "label": "Task Title",
-   "options": "Task",
-   "unique": 1
-  },
-  {
-   "fieldname": "project_name",
    "fieldtype": "Data",
-   "label": "Project Name",
-   "read_only": 1
+   "label": "Task Title",
+   "unique": 1
   },
   {
    "fieldname": "attachments",
    "fieldtype": "Table",
    "label": "Attachments",
    "options": "Attachments"
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-16 16:24:00.355417",
- "modified_by": "Administrator",
+ "modified": "2025-05-20 09:55:08.570921",
+ "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Tasks",
  "naming_rule": "By fieldname",

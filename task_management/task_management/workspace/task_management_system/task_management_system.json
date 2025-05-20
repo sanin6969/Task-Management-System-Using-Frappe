@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"wI-Ewa4FNI\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks Assigned\",\"col\":4}},{\"id\":\"kdvr-lRjXP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project\",\"col\":3}},{\"id\":\"GF8_qRwYng\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Reports\",\"col\":3}},{\"id\":\"sa966VKmIg\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"iaIVnWZMUd\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Leave Request\",\"col\":3}},{\"id\":\"QkEkzGQc09\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"WebSite\",\"col\":3}},{\"id\":\"cMx2yq3xfk\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employees\",\"col\":3}}]",
+ "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"O6Vx7nJzHc\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Q5eo-NgmTA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project Report\",\"col\":3}},{\"id\":\"DWNQWpDU0h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Report\",\"col\":3}},{\"id\":\"LzpL_z4DGD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"HR Dashboard\",\"col\":3}},{\"id\":\"Pde4VHIqz9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Dashboard\",\"col\":3}},{\"id\":\"Z3aQcF4BJw\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"aOw-yU0WCn\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Tasks\",\"col\":4}},{\"id\":\"0uWEoTZgbk\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Projects\",\"col\":4}},{\"id\":\"Zp55_6ldv9\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Employee Profile\",\"col\":4}},{\"id\":\"i-MSyba__b\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
  "creation": "2025-05-09 10:05:40.879530",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Task Management System",
  "links": [],
- "modified": "2025-05-16 10:16:53.596925",
+ "modified": "2025-05-20 09:32:51.961829",
  "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Task Management System",
@@ -21,7 +21,23 @@
  "owner": "hrmanager1@gmail.com",
  "parent_page": "",
  "public": 1,
- "quick_lists": [],
+ "quick_lists": [
+  {
+   "document_type": "Employee Profile",
+   "label": "Employee Profile",
+   "quick_list_filter": "[]"
+  },
+  {
+   "document_type": "Project",
+   "label": "Projects",
+   "quick_list_filter": "[]"
+  },
+  {
+   "document_type": "Tasks",
+   "label": "Tasks",
+   "quick_list_filter": "[]"
+  }
+ ],
  "roles": [
   {
    "role": "Employee"
@@ -32,49 +48,32 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Employees",
-   "link_to": "Employee Profile",
-   "stats_filter": "[]",
-   "type": "DocType"
-  },
-  {
-   "color": "Blue",
-   "doc_view": "List",
-   "label": "Project",
-   "link_to": "Project",
-   "stats_filter": "[]",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "WebSite",
-   "type": "URL",
-   "url": "http://localhost:8001/completed_tasks"
-  },
-  {
-   "color": "Orange",
-   "doc_view": "List",
-   "label": "Tasks Assigned",
-   "link_to": "Tasks",
-   "stats_filter": "[]",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Task Reports",
-   "link_to": "Task Reports",
-   "report_ref_doctype": "Tasks",
+   "label": "Project Report",
+   "link_to": "Project Report",
+   "report_ref_doctype": "Project",
    "type": "Report"
   },
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Leave Request",
-   "link_to": "Leave Request",
-   "stats_filter": "[]",
-   "type": "DocType"
+   "label": "HR Dashboard",
+   "link_to": "Hr DashBoard",
+   "type": "Dashboard"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Task Dashboard",
+   "link_to": "My Tasks",
+   "type": "Dashboard"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Task Report",
+   "link_to": "Task Reports",
+   "report_ref_doctype": "Tasks",
+   "type": "Report"
   }
  ],
  "title": "Task Management System"

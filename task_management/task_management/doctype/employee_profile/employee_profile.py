@@ -85,7 +85,6 @@ class EmployeeProfile(Document):
                 },
                 reference_doctype="Employee Profile",
                 reference_name=doc.name,
-                enqueue=True
             )
             doc.user = user.name
             frappe.db.set_value("Employee Profile", doc.name, "user", user.name)

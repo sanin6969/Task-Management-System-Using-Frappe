@@ -5,7 +5,7 @@
 from frappe.model.document import Document
 
 
-class Task(Document):
+class ProjectTask(Document):
 	pass	
  # def on on_update(self):
 		# if self.status == "Started":

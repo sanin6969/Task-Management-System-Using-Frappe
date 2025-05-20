@@ -2,272 +2,84 @@
 
 {% block page_content %}
 <style>
-    :root {
-        --primary-color: #4361ee;
-        --secondary-color: #3f37c9;
-        --success-color: #4cc9f0;
-        --light-gray: #f8f9fa;
-        --card-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
+  .linked-task {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
 
-    .dashboard-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-    }
+  .filter-section {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
 
-    .gradient-header {
-        color: grey;
-        padding: 2rem;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        text-align: center;
-        box-shadow: 0 10px 25px rgba(67, 97, 238, 0.3);
-        transform: translateY(0);
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
-        animation: fadeIn 0.8s ease-in-out;
-    }
-
-    .gradient-header:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 35px rgba(67, 97, 238, 0.4);
-    }
-
-    .gradient-header h2 {
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        font-size: 2.2rem;
-    }
-
-    .gradient-header p {
-        opacity: 0.9;
-        font-size: 1.1rem;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .task-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1rem;
-    }
-
-    .task-card {
-        background: white;
-        border-radius: 12px;
-        box-shadow: var(--card-shadow);
-        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        overflow: hidden;
-        position: relative;
-        height: 100%;
-        border: none;
-        animation: slideUp 0.6s ease-out forwards;
-        opacity: 0;
-    }
-
-    .task-card:nth-child(1) { animation-delay: 0.1s; }
-    .task-card:nth-child(2) { animation-delay: 0.2s; }
-    .task-card:nth-child(3) { animation-delay: 0.3s; }
-    .task-card:nth-child(4) { animation-delay: 0.4s; }
-    .task-card:nth-child(5) { animation-delay: 0.5s; }
-    .task-card:nth-child(6) { animation-delay: 0.6s; }
-
-    .task-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-    }
-
-    .task-card:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary-color), var(--success-color));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s ease;
-    }
-
-    .task-card:hover:before {
-        transform: scaleX(1);
-    }
-
-    .card-body {
-        padding: 1.5rem;
-    }
-
-    .card-title {
-        color: var(--primary-color);
-        font-weight: 600;
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-    }
-
-    .card-title i {
-        margin-right: 0.5rem;
-        color: var(--success-color);
-        font-size: 1.1rem;
-    }
-
-    .card-text {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.75rem;
-        font-size: 0.95rem;
-    }
-
-    .card-text i {
-        margin-right: 0.5rem;
-        font-size: 1rem;
-        color: #6c757d;
-        width: 18px;
-        text-align: center;
-    }
-
-    .card-text strong {
-        margin-right: 0.35rem;
-        font-weight: 600;
-    }
-
-    .badge-status {
-        font-size: 0.8rem;
-        padding: 0.35rem 0.75rem;
-        border-radius: 50px;
-        font-weight: 500;
-        background: rgba(67, 97, 238, 0.1);
-        color: var(--primary-color);
-        transition: all 0.3s ease;
-    }
-
-    .badge-status:hover {
-        background: rgba(67, 97, 238, 0.2);
-        transform: scale(1.05);
-    }
-
-    .completed-date {
-        font-size: 0.85rem;
-        color: #6c757d;
-        margin-top: 0.5rem;
-    }
-
-    .empty-state {
-        background: var(--light-gray);
-        border-radius: 12px;
-        padding: 3rem 2rem;
-        text-align: center;
-        box-shadow: var(--card-shadow);
-        animation: fadeIn 1s ease;
-    }
-
-    .empty-state i {
-        font-size: 3rem;
-        color: #adb5bd;
-        margin-bottom: 1rem;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-        from { 
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-
-    /* Media Queries */
-    @media (max-width: 768px) {
-        .task-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-        
-        .gradient-header {
-            padding: 1.5rem;
-        }
-        
-        .gradient-header h2 {
-            font-size: 1.8rem;
-        }
-    }
+  .filter-section select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
 </style>
 
-<div class="dashboard-container">
-    <div class="gradient-header">
-        <h2>Tasks Dashboard</h2>
-        <p>Here's a summary of tasks that have been successfully completed by our team members</p>
-    </div>
+<h2 class="mb-4">📋 My Assigned Tasks</h2>
 
-    {% if tasks %}
-        <div class="task-grid">
-            {% for task in tasks %}
-            <div class="task-card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <i class="bi bi-check-circle-fill"></i>{{ task.task_title }}
-                    </h5>
-                    <p class="card-text">
-                        <i class="bi bi-person-fill"></i><strong>Employee:</strong> {{ task.assigned_to }}
-                    </p>
-                    
-                    <p class="card-text">
-                        <i class="bi bi-tag-fill"></i><strong>Status:</strong>
-                        <span class="badge badge-status">{{ task.status }}</span>
-                    </p>
-                    <p class="card-text completed-date">
-                        <i class="bi bi-person-plus"></i><strong>Assigned By:</strong> {{ task.created_by }}
-                    </p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="empty-state">
-            <i class="bi bi-clipboard-x"></i>
-            <h4>No Completed Tasks</h4>
-            <p>There are currently no completed tasks to display.</p>
-        </div>
-    {% endif %}
+<div class="filter-section">
+  <form method="GET">
+    <label>
+      Filter by Project:
+      <select name="project_name" class="form-select" onchange="this.form.submit()">
+        <option value="">All Projects</option>
+        {% for project in project_names %}
+          <option value="{{ project }}" {% if project == selected_project %}selected{% endif %}>{{ project }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>
+      Filter by Status:
+      <select name="status" class="form-select" onchange="this.form.submit()">
+        <option value="">All Statuses</option>
+        {% for stat in statuses %}
+          <option value="{{ stat }}" {% if stat == selected_status %}selected{% endif %}>{{ stat }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </form>
 </div>
 
-<script>
-    // Add interaction and animation effects
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.task-card');
-        
-        // Initialize cards with animations
-        cards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-        });
-        
-        // Optional: Add scroll reveal effect
-        window.addEventListener('scroll', function() {
-            cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (cardTop < windowHeight - 50) {
-                    card.classList.add('visible');
-                }
-            });
-        });
-    });
-</script>
+{% if tasks %}
+  <div class="row">
+    {% for task in tasks %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ task.task_name }}</h5>
+            <p class="card-text"><strong>Status:</strong> {{ task.status }}</p>
+            <p class="card-text"><strong>Due:</strong> {{ task.due_date or "N/A" }}</p>
+            <p class="card-text"><strong>Start:</strong> {{ task.start_date or "N/A" }} |
+              <strong>End:</strong> {{ task.end_date or "N/A" }}</p>
+            <p class="card-text"><strong>Project:</strong> {{ task.project_name }}</p>
+
+            {% if task.linked_task_data %}
+              <div class="linked-task">
+                <h6 class="fw-bold mb-2">🔗 Linked Task</h6>
+                <p><strong>Title:</strong> {{ task.linked_task_data.task_title }}</p>
+                <p><strong>Start:</strong> {{ task.linked_task_data.start_time or "N/A" }}</p>
+                <p><strong>End:</strong> {{ task.linked_task_data.end_time or "N/A" }}</p>
+                <p><strong>Hours:</strong> {{ task.linked_task_data.working_hours or 0 }}</p>
+                <p><strong>Project:</strong> {{ task.linked_task_data.project_name }}</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No tasks found.</p>
+{% endif %}
 {% endblock %}

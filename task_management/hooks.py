@@ -9,7 +9,13 @@ permission_query_conditions = {
     "Tasks": "task_management.task_management.doctype.tasks.tasks.get_permission_query_conditions",
     "Employee Profile": "task_management.employee_profile_permissions.get_permission_query_conditions" ,  
     "Leave Request": "task_management.leave_request_permissions.get_permission_query_conditions" ,
-    "Project": "task_management.api.get_permission_query_conditions",  
+    # "Project": "task_management.api.get_permission_query_conditions",  
+}
+scheduler_events = {
+    "all": [
+        "task_management.task_reminder.send_task_due_reminders",
+        "task_management.task_reminder.update_overdue_tasks"
+    ]
 }
 
 doc_events = {

@@ -17,9 +17,6 @@ frappe.ui.form.on('Tasks', {
                 frm.set_value("status", "Assigned ");
             }, 'Change Status');
 
-            // frm.page.add_inner_button('Mark Completed', function () {
-            //     frm.set_value("status", "Completed");
-            // }, 'Change Status');
         }
         if (is_employee && !is_team_lead && !is_hr_manager) {
             frm.page.add_inner_button('Mark In Progress', function () {
