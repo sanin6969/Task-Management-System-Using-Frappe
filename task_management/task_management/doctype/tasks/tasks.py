@@ -3,6 +3,7 @@ import frappe
 from frappe import _
 from datetime import datetime
 from frappe.utils import get_datetime,getdate
+from frappe.share import add as add_share
 
 
 class Tasks(Document):
@@ -12,20 +13,16 @@ class Tasks(Document):
     def _get_user_roles(self):
         is_employee = frappe.db.exists("Employee Profile", {"user": frappe.session.user})
         is_team_lead = "Team Lead" in frappe.get_roles()
-        print(is_team_lead,'taem llllllllllllllllll')
+        # print(is_team_lead,'taem llllllllllllllllll')
         return is_employee, is_team_lead
     
     def validate(self):
-        print('workingggggggggggggggggggggggggggggggggggggg')
+        # print('workingggggggggggggggggggggggggggggggggggggg')
         is_employee, is_team_lead = self._get_user_roles()
         
         if is_team_lead:
-            print('[workingssssssssssssssssssssssssssssssssssssssss')
             if self.status == "Assigned" and not self.assigned_date:
-                print('assssssssssssssssingned')
                 self.assigned_date = frappe.utils.nowdate()
-            if self.status == "Draft" and self.assigned_to:
-                frappe.throw(_("Assigned To must be empty when status is 'Draft'"))
                 
             if self.status == "Assigned" and not self.assigned_to:
                 frappe.throw(_("You should Assign a user if the status is 'Assigned'"))
@@ -55,6 +52,10 @@ class Tasks(Document):
         is_employee, is_team_lead = self._get_user_roles()
         if is_team_lead and self.status == "Assigned":
             self.send_assignment_notification()
+            add_share("Tasks",self.name,user=self.assigned_to, read=1, write=1, submit=0, share=0, everyone=0, notify=1)
+            
+            add_share("Project",self.project_name,user=self.assigned_to, read=1, write=1, submit=0, share=0, everyone=0, notify=1)
+            
         elif is_employee and self.status == "Completed":
             self.send_completed_notification()
             
@@ -67,28 +68,24 @@ class Tasks(Document):
         if not project_tasks:
             return
 
-        update_fields = {}
-        if self.status == "In Progress":
-            update_fields["status"] = "Started"
-        elif self.status == "Completed":
-            update_fields["status"] = "Completed"
+        for pt in project_tasks:
+            doc = frappe.get_doc("Project Task", pt.name)
 
-        if self.assigned_to:
-            update_fields["assigned_to"] = self.assigned_to
-        if self.workings_hours:
-            update_fields["working_hours"] = self.workings_hours
-        if self.start_time:
-            update_fields["start_date"] = getdate(self.start_time)
-        if self.end_time:
-            update_fields["end_date"] = getdate(self.end_time)
+            if self.status == "In Progress":
+                doc.status = "Started"
+            elif self.status == "Completed":
+                doc.status = "Completed"
 
-        if update_fields:
-            frappe.db.set_value(
-                "Project Task",
-                {"name": ("in", [pt.name for pt in project_tasks])},
-                update_fields,
-                update_modified=False
-            )
+            if self.assigned_to:
+                doc.assigned_to = self.assigned_to
+            if self.workings_hours:
+                doc.working_hours = self.workings_hours
+            if self.start_time:
+                doc.start_date = getdate(self.start_time)
+            if self.end_time:
+                doc.end_date = getdate(self.end_time)
+
+            doc.save(ignore_permissions=True)
             
 
         
@@ -108,12 +105,12 @@ class Tasks(Document):
             return  
         task_name = self.name 
         creator = frappe.get_value("User", self.created_by, "full_name") or self.created_by
-        assignee = frappe.get_value("Employee Profile", {"name": self.assigned_to}, "user")
+        # assignee = frappe.get_value("Employee Profile", {"name": self.assigned_to}, "user")
 
         frappe.get_doc({
             "doctype": "ToDo",
-            "owner": assignee,
-            "allocated_to": assignee,
+            "owner": self.assigned_to,
+            "allocated_to": self.assigned_to,
             "description": f"{creator} has assigned you the task: {task_name}.",
             "assigned_by": self.created_by,
             "reference_type": "Tasks",
@@ -122,7 +119,7 @@ class Tasks(Document):
 
         frappe.get_doc({
             "doctype": "Notification Log",
-            "for_user": assignee,
+            "for_user": self.assigned_to,
             "type": "Alert",
             "document_type": "Tasks",
             "document_name": self.name,
@@ -135,7 +132,7 @@ class Tasks(Document):
 
 
 
-def get_permission_query_conditions(user):
+def get_permission_query_conditions(user): 
     if "HR Manager" in frappe.get_roles(user):
         return ""
     employee_name = frappe.db.get_value("Employee Profile", {"user": user}, "name")

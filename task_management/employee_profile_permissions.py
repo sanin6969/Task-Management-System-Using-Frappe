@@ -3,8 +3,7 @@ import frappe
 def get_permission_query_conditions(user, doctype):
     conditions = []
 
-
-    employee = frappe.db.get_value("Employee Profile", {"user": user}, "name")
+    # employee = frappe.db.get_value("Employee Profile", {"user": user}, "name")
 
 
     user_roles = frappe.get_roles(user)

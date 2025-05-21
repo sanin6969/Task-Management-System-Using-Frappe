@@ -1,17 +1,17 @@
 import frappe
 from frappe import _
-
+from datetime import datetime
+from frappe.utils import get_datetime,getdate
 @frappe.whitelist()
 def get_team_members(doctype, txt, searchfield, start, page_len, filters):
     user = frappe.session.user
-    lead_profile = frappe.get_doc("Employee Profile", {"user": user})    
     employees = frappe.get_all("Employee Profile",
-        filters={"reports_to": lead_profile.email},
-        fields=["name", "user"],
+        filters={"reports_to": user},
+        fields=["user","email"],
         limit_page_length=page_len,
         start=start
     )
-    return [[emp.name] for emp in employees if emp.user]
+    return [[emp.email] for emp in employees if emp.user]
 
 # def get_permission_query_conditions(user):
 #     if not user: return ""
@@ -42,6 +42,44 @@ def add_task_comment(docname, comment_text):
     doc.add_comment("Comment", comment_text)
     return "Comment added successfully"
 
+@frappe.whitelist()
+def mark_project_completed_employee(project_name):
+    user = frappe.session.user
+    doc = frappe.get_doc("Project", project_name)
+    updated_tasks = []
+    blocked_tasks = []
+    already_completed = []
+
+    for task_row in doc.get("task", []):
+        # print(task_row.task_name,'c ttttttttttttttttttttt nnnaaaaammmmmeeee')
+        if task_row.assigned_to == user:
+            if task_row.status == "Started" or task_row.status == "Overdue":
+                emp_tasks =  frappe.get_doc("Tasks",task_row.task_name)
+                # print(emp_tasks,'empppppppppppppppppppp')
+                task_row.status = "Completed"
+                emp_tasks.status="Completed"
+                emp_tasks.end_time = datetime.now()
+                emp_tasks.workings_hours = round(
+                        (get_datetime(emp_tasks.end_time) - get_datetime(emp_tasks.start_time)).total_seconds() / 3600, 2
+                    )
+                task_row.working_hours = emp_tasks.workings_hours
+                task_row.start_date = getdate(emp_tasks.start_time)
+                task_row.end_date = getdate(emp_tasks.end_time)
+                task_row.save()
+                emp_tasks.save()
+                updated_tasks.append(task_row.task_name)
+            elif task_row.status == "Not Started":
+                blocked_tasks.append(task_row.task_name)
+            elif task_row.status == "Completed":
+                already_completed.append(task_row.task_name)
+
+    return {
+        "updated_tasks": updated_tasks,
+        "blocked_tasks": blocked_tasks,
+        "already_completed": already_completed,
+    }
+            
+        
 
 
 
@@ -74,12 +112,10 @@ def send_task_reminders(project_name):
         if task.status != "Completed" and task.assigned_to:
             title = f"Reminder to complete task: {task.task_name}"
             message = f"You are assigned to task <b></b> in project <b>{project_name}</b>. Please complete it as soon as possible."
-            
-            User = user = frappe.get_value("Employee Profile", {"name": task.assigned_to}, "user")
-            
+                        
             frappe.get_doc({
             "doctype": "Notification Log",
-            "for_user": User,
+            "for_user": task.assigned_to,
             "type": "Alert",
             "document_type": "Project Task",
             "document_name": task.name,

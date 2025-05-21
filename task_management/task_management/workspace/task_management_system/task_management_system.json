@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"O6Vx7nJzHc\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"Q5eo-NgmTA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project Report\",\"col\":3}},{\"id\":\"DWNQWpDU0h\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Report\",\"col\":3}},{\"id\":\"LzpL_z4DGD\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"HR Dashboard\",\"col\":3}},{\"id\":\"Pde4VHIqz9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Dashboard\",\"col\":3}},{\"id\":\"Z3aQcF4BJw\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"aOw-yU0WCn\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Tasks\",\"col\":4}},{\"id\":\"0uWEoTZgbk\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Projects\",\"col\":4}},{\"id\":\"Zp55_6ldv9\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Employee Profile\",\"col\":4}},{\"id\":\"i-MSyba__b\",\"type\":\"spacer\",\"data\":{\"col\":12}}]",
+ "content": "[{\"id\":\"RynUbq_THp\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Task Management System</span>\",\"col\":12}},{\"id\":\"Pde4VHIqz9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Task Dashboard\",\"col\":3}},{\"id\":\"kycVvJFWLM\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Project Reports\",\"col\":3}},{\"id\":\"xCDpG6DZCg\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks Reports\",\"col\":3}},{\"id\":\"O6Vx7nJzHc\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"LAc9S7ATdo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tasks\",\"col\":3}},{\"id\":\"1dPZLfiwVh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Profile\",\"col\":3}},{\"id\":\"PUSHmgHjY0\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Projects\",\"col\":3}}]",
  "creation": "2025-05-09 10:05:40.879530",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Task Management System",
  "links": [],
- "modified": "2025-05-20 09:32:51.961829",
+ "modified": "2025-05-21 10:01:14.596899",
  "modified_by": "hrmanager1@gmail.com",
  "module": "Task Management",
  "name": "Task Management System",
@@ -21,34 +21,18 @@
  "owner": "hrmanager1@gmail.com",
  "parent_page": "",
  "public": 1,
- "quick_lists": [
-  {
-   "document_type": "Employee Profile",
-   "label": "Employee Profile",
-   "quick_list_filter": "[]"
-  },
-  {
-   "document_type": "Project",
-   "label": "Projects",
-   "quick_list_filter": "[]"
-  },
-  {
-   "document_type": "Tasks",
-   "label": "Tasks",
-   "quick_list_filter": "[]"
-  }
- ],
+ "quick_lists": [],
  "roles": [
   {
    "role": "Employee"
   }
  ],
- "sequence_id": 1.0,
+ "sequence_id": 2.0,
  "shortcuts": [
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Project Report",
+   "label": "Project Reports",
    "link_to": "Project Report",
    "report_ref_doctype": "Project",
    "type": "Report"
@@ -56,12 +40,29 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "HR Dashboard",
-   "link_to": "Hr DashBoard",
-   "type": "Dashboard"
+   "label": "Tasks",
+   "link_to": "Tasks",
+   "stats_filter": "[]",
+   "type": "DocType"
   },
   {
    "color": "Grey",
+   "doc_view": "List",
+   "label": "Tasks Reports",
+   "link_to": "Task Reports",
+   "report_ref_doctype": "Tasks",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Employee Profile",
+   "link_to": "Employee Profile",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "#0788eb",
    "doc_view": "List",
    "label": "Task Dashboard",
    "link_to": "My Tasks",
@@ -70,10 +71,10 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Task Report",
-   "link_to": "Task Reports",
-   "report_ref_doctype": "Tasks",
-   "type": "Report"
+   "label": "Projects",
+   "link_to": "Project",
+   "stats_filter": "[]",
+   "type": "DocType"
   }
  ],
  "title": "Task Management System"

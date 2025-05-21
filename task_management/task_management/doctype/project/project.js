@@ -17,7 +17,7 @@ frappe.ui.form.on('Project', {
             frm.set_df_property('end_date', 'read_only', 1);
             frm.set_df_property('task', 'read_only', 1);
             frm.set_df_property('project_name', 'read_only', 1);
-
+            mark_completed_emp(frm)
         }
     },
     refresh: async function(frm) {
@@ -32,7 +32,58 @@ frappe.ui.form.on('Project', {
     }
 
 });
+function mark_completed_emp(frm) {
+    frm.page.add_inner_button('Mark Completed', function () {
+        frappe.call({
+            method: "task_management.api.mark_project_completed_employee",
+            args: {
+                project_name: frm.doc.name
+            },
+            callback: function (r) {
+                const data = r.message;
 
+                if (data.blocked_tasks && data.blocked_tasks.length) {
+                    frappe.msgprint({
+                        title: __("Blocked Tasks"),
+                        message: __("Some tasks are not started yet: ") + data.blocked_tasks.join(", ") + ". You must start these tasks before marking them as completed.",
+                        indicator: "red"
+                    });
+                }
+
+                if (data.updated_tasks && data.updated_tasks.length) {
+                    frappe.msgprint({
+                        title: __("Tasks Completed"),
+                        message: __("The following tasks were marked as completed: ") + data.updated_tasks.join(", "),
+                        indicator: "green"
+                    });
+                }
+
+                if (data.already_completed && data.already_completed.length) {
+                    frappe.msgprint({
+                        title: __("Already Completed"),
+                        message: __("The following tasks were already completed: ") + data.already_completed.join(", "),
+                        indicator: "orange"
+                    });
+                }
+
+                // if (
+                //     (data.updated_tasks.length > 0 || data.already_completed.length > 0) &&
+                //     data.blocked_tasks.length === 0
+                // ) {
+                //     frm.set_value('status', 'Completed');
+                //     frm.save().then(() => {
+                //         frappe.msgprint({
+                //             title: __("Project Completed"),
+                //             message: __("All your tasks are completed. Project status is now set to Completed."),
+                //             indicator: "green"
+                //         });
+                //         frm.reload_doc();
+                //     });
+                // }
+            }
+        });
+    });
+}
 
 function mark_completed(frm) {
     frm.page.add_inner_button('Mark Completed', function () {

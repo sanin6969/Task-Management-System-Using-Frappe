@@ -49,7 +49,6 @@ class LeaveRequest(Document):
 
     def on_submit(self):
         if self.docstatus == 1:
-            # print("submitting the leaaaave reqeusrstttttt")
             employee = frappe.get_doc("Employee Profile", {"user": self.owner})
             leave_days = float(self.leave_days)
 

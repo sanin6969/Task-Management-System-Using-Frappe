@@ -64,17 +64,16 @@ class EmployeeProfile(Document):
                 user.enabled = 1
                 user.new_password = "plmnkoijb"
                 user.send_welcome_email = 0
+                user.module_profile = "Team Leads and Employees"
+                roles_to_assign = {"Employee"}
+                if doc.roles:
+                    for r in doc.roles:
+                        roles_to_assign.add(r.roles)
+                for role in roles_to_assign:
+                    if not frappe.db.exists("Has Role", {"parent": user.name, "role": role}):
+                        user.append("roles", {"role": role})
                 user.insert(ignore_permissions=True)
 
-            roles_to_assign = {"Employee"}
-            if doc.roles:
-                for r in doc.roles:
-                    roles_to_assign.add(r.roles)
-
-            for role in roles_to_assign:
-                if not frappe.db.exists("Has Role", {"parent": user.name, "role": role}):
-                    user.append("roles", {"role": role})
-            user.save(ignore_permissions=True)
             frappe.sendmail(
                 recipients=[doc.email],
                 subject= f"Welcome to Task Management , {doc.first_name}",
@@ -88,7 +87,6 @@ class EmployeeProfile(Document):
             )
             doc.user = user.name
             frappe.db.set_value("Employee Profile", doc.name, "user", user.name)
-            frappe.db.set_value("Employee Profile", doc.name, "password", "")
         
 
 

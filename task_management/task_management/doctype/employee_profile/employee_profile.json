@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:EMP-{###}-{first_name}",
+ "autoname": "field:email",
  "creation": "2025-05-07 14:38:51.080108",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -50,7 +50,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Email",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "password",
@@ -92,6 +93,7 @@
   {
    "fieldname": "role_modules",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Role Modules",
    "options": "Module Profile"
   }
@@ -99,11 +101,11 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-05-15 11:26:14.478989",
- "modified_by": "hrmanager1@gmail.com",
+ "modified": "2025-05-20 16:02:35.914155",
+ "modified_by": "Administrator",
  "module": "Task Management",
  "name": "Employee Profile",
- "naming_rule": "Expression",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
